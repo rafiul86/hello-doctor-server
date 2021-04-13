@@ -19,12 +19,18 @@ client.connect(err => {
   const collection = client.db("hellodoctor").collection("teeth");
 
   app.post('/addAppointment',(req,res)=>{
-    console.log(req.body)
     collection.insertOne(req.body)
     .then(result =>{
       res.send(result.insertedCount>0)
     })
-    
+  })
+  
+  app.post('/appointmentByDate', (req,res)=>{
+    const date = req.body
+    collection.find({date : date.date})
+    .toArray((err,documents)=>{
+      res.send(documents)
+    })
   })
 
   
