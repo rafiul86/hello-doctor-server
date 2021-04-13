@@ -17,6 +17,17 @@ app.get('/',(req,res)=>{
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("hellodoctor").collection("teeth");
+
+  app.post('/addAppointment',(req,res)=>{
+    console.log(req.body)
+    collection.insertOne(req.body)
+    .then(result =>{
+      res.send(result.insertedCount>0)
+    })
+    
+  })
+
+  
   console.log('database connected')
 });
 
