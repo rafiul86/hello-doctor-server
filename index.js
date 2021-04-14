@@ -33,6 +33,13 @@ client.connect(err => {
     })
   })
 
+  app.get('/allpatients',(req,res)=>{
+    collection.find({})
+    .toArray((err,documents)=>{
+      res.send(documents)
+    })
+  })
+
   
   console.log('database connected')
 });
