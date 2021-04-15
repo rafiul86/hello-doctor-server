@@ -32,7 +32,6 @@ client.connect(err => {
   app.post('/appointmentsByDate', (req,res)=>{
     const date = req.body
     const email = req.body.email
-    console.log(email)
     doctorCollection.find({email :email})
     .toArray((err,doctors)=>{
       const filter = {date : date.date}
@@ -72,6 +71,15 @@ client.connect(err => {
     doctorCollection.insertOne({name,email ,img : file.name})
     .then(res =>{
       res.send(res.insertedCount>0)
+    })
+  })
+
+  app.post('/admin', (req,res)=>{
+    const email = req.body.email
+    doctorCollection.find({email : email })
+    .toArray((err, documents)=>{
+      res.send(documents.length > 0)
+      console.log(documents.length)
     })
   })
   
