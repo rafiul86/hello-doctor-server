@@ -29,11 +29,20 @@ client.connect(err => {
     })
   })
   
-  app.post('/appointmentByDate', (req,res)=>{
+  app.post('/appointmentsByDate', (req,res)=>{
     const date = req.body
-    collection.find({date : date.date})
+    const email = req.body.email
+    console.log(email)
+    doctorCollection.find({email :email})
+    .toArray((err,doctors)=>{
+      const filter = {date : date.date}
+      if(doctors.length === 0){
+        filter.email = email
+      }
+      collection.find(filter)
     .toArray((err,documents)=>{
       res.send(documents)
+    })
     })
   })
 
